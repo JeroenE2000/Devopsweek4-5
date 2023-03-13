@@ -2,9 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 const mongoose = require('mongoose');
-// const url = 'mongodb://jeroen:password@127.0.0.1:12346/?authSource=admin';
 
-mongoose.connect('mongodb://localhost:12346/users');
+mongoose.connect('mongodb://jeroen:password@mongodb:27017/users?authSource=admin', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 
@@ -23,13 +22,11 @@ router.get('/', async function(req, res, next) {
   res.json(users);
 });
 
-app.post('/users', async function (req, res) {
+router.post('/', async function (req, res) {
     
   let user = new userSchema(req.body);
   let result = await db.collection('users').insertOne(user);
-  user.save().then((user) => {
-      result.send(200, user);
-  })
+  res.status(200).send(user);
 });
 
 module.exports = router;
