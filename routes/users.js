@@ -4,7 +4,9 @@ var router = express.Router();
 const mongoose = require('mongoose');
 // const url = 'mongodb://jeroen:password@127.0.0.1:12346/?authSource=admin';
 
-mongoose.connect('mongodb://mongodb:12346/users');
+mongoose.connect('mongodb://localhost:12346/users');
+
+const db = mongoose.connection;
 
 let userSchema = mongoose.model('users', new mongoose.Schema({
   username: String,
